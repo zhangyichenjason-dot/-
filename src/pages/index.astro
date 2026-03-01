@@ -1,0 +1,1976 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Tag from "../components/Tag.astro";
+import { projects } from "../data/projects";
+import { socialLinks } from "../data/socialLinks";
+---
+
+<Layout title="游戏作品集 | Jason 张奕晨">
+	<Navbar currentPage="home" />
+
+	<!-- ========== 主页 ========== -->
+	<section id="home" class="hero">
+		<div class="crt-monitor">
+			<div class="monitor-frame">
+				<div class="monitor-bezel">
+					<div class="power-led"></div>
+					<div class="brand-label">FAMILY COMPUTER</div>
+				</div>
+				<div class="screen-container">
+					<div class="screen-inner">
+						<video autoplay muted loop playsinline class="bg-video">
+							<source
+								src="/video/超精简版合集.mp4"
+								type="video/mp4"
+							/>
+						</video>
+						<div class="scanlines"></div>
+					</div>
+				</div>
+				<div class="monitor-controls">
+					<div class="control-knob"></div>
+					<div class="control-knob"></div>
+					<div class="control-slider"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-content">
+			<h1 class="name animate-fade-in-up">
+				<span class="prefix">&gt;</span> Jason 张奕晨
+				<span class="cursor">_</span>
+			</h1>
+		</div>
+
+		<div
+			class="scroll-indicator animate-fade-in"
+			style="animation-delay: 0.6s"
+		>
+			<span>&gt; 向下滚动</span>
+			<div class="arrow-down">▼</div>
+		</div>
+	</section>
+
+	<!-- ========== 关于我 ========== -->
+	<section id="about" class="about-section">
+		<div class="container">
+			<div class="terminal-window about-terminal">
+				<div class="terminal-header">
+					<span class="terminal-title">user_profile.exe</span>
+				</div>
+				<div class="terminal-body">
+					<div class="about-content">
+						<div class="portrait-section">
+							<div class="portrait-wrapper">
+								<img
+									src="/images/个人照片.jpg"
+									alt="个人照片"
+									class="portrait"
+								/>
+								<div class="portrait-scanline"></div>
+							</div>
+						</div>
+
+						<div class="info-section">
+							<div class="info-line">
+								<span class="label">&gt; 用户名:</span>
+								<span class="value"> 张奕晨</span>
+							</div>
+							<div class="info-line">
+								<span class="label">&gt; 状态:</span>
+								<span class="value status-online">在校</span>
+							</div>
+							<div class="info-line">
+								<span class="label">&gt; 角色:</span>
+								<span class="value">游戏设计/策划</span>
+							</div>
+
+							<div class="experience-section">
+								<div class="info-line">
+									<span class="label">&gt; 经历:</span>
+								</div>
+								<div class="experience-list">
+									<div class="experience-item">
+										<span class="exp-period">本科</span>
+										<span class="exp-detail"
+											>北京工业大学 (211) · 软件工程</span
+										>
+									</div>
+									<div class="experience-item">
+										<span class="exp-period">实习</span>
+										<span class="exp-detail"
+											>北京乐易互娱 · 休闲游戏关卡制作</span
+										>
+									</div>
+									<div class="experience-item">
+										<span class="exp-period"
+											>大四（交换）</span
+										>
+										<span class="exp-detail"
+											>爱尔兰都柏林大学 · 计算机科学
+											(获学位)</span
+										>
+									</div>
+									<div class="experience-item">
+										<span class="exp-period"
+											>硕士 (在读)</span
+										>
+										<span class="exp-detail"
+											>英国华威大学 (QS69) · 游戏工程</span
+										>
+									</div>
+								</div>
+							</div>
+
+							<div class="bio">
+								<div class="info-line">
+									<span class="label">&gt; BIO:</span>
+								</div>
+								<p class="bio-text">
+									我是一个沉溺于'将创意工程化'的制作人。我既享受将喜欢的游戏分析并打磨成一份严谨的逻辑文档，更享受亲手用
+									<strong class="skill-highlight"
+										>C++/C#/Java/python</strong
+									> 在极短时间内将其转化为高性能的游戏原型。
+								</p>
+								<p class="bio-text">
+									具备 <strong class="skill-highlight"
+										>Unity/Godot</strong
+									> 深度开发经验及 <strong
+										class="skill-highlight">Blender</strong
+									> 建模基础，擅长 <strong
+										class="skill-highlight">3C系统</strong
+									> 与 <strong class="skill-highlight"
+										>AI行为树</strong
+									> 的搭建。我不仅追求交互瞬间的质感，更关注底层架构的可扩展性与逻辑闭环。作为技术出身的策划，我热衷于扮演团队中的'翻译官'，利用
+									<strong class="skill-highlight"
+										>AI/Python</strong
+									> 脚本优化管线工具，解决设计与实现间的断层。我深知游戏是感性的艺术，但必须建立在理性且优雅的技术骨架之上。
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ========== 作品集 ========== -->
+	<section id="portfolio" class="portfolio-section">
+		<div class="container">
+			<div class="game-console">
+				<div class="console-screen">
+					<div class="screen-bezel">
+						<div
+							class="slideshow-container"
+							id="slideshow-container"
+						>
+							{
+								projects[0].media.map((src, i) => (
+									<img
+										src={src}
+										alt={`${projects[0].title} - ${i + 1}`}
+										class:list={[
+											"slide-image",
+											{ active: i === 0 },
+										]}
+									/>
+								))
+							}
+						</div>
+						<button
+							class="slide-arrow slide-arrow-left"
+							id="slide-prev"
+							aria-label="上一张">‹</button
+						>
+						<button
+							class="slide-arrow slide-arrow-right"
+							id="slide-next"
+							aria-label="下一张">›</button
+						>
+						<div class="slide-indicators" id="slide-indicators">
+							{
+								projects[0].media.map((_, i) => (
+									<span
+										class:list={[
+											"slide-indicator",
+											{ active: i === 0 },
+										]}
+									/>
+								))
+							}
+						</div>
+						<div class="screen-overlay"></div>
+					</div>
+					<!-- 卡带插入窗口 -->
+					<div
+						class="cartridge-slot-window"
+						id="cartridge-slot-window"
+					>
+						<div
+							class="inserted-cartridge-holder"
+							id="inserted-holder"
+						>
+						</div>
+						<div class="slot-window-glass"></div>
+					</div>
+				</div>
+
+				<div class="project-info">
+					<h3 id="project-title" class="project-title">
+						<span class="prefix">&gt;</span>
+						{projects[0].title}
+					</h3>
+					<div id="project-tags" class="project-tags">
+						{
+							projects[0].tags.map((tag) => (
+								<Tag text={tag.text} color={tag.color} />
+							))
+						}
+					</div>
+					<p id="project-duration" class="project-duration">
+						<span class="prefix">&gt;</span> 制作时长：{
+							projects[0].duration
+						}周
+					</p>
+					<p
+						id="project-description"
+						class="project-desc"
+						set:html={projects[0].description}
+					/>
+				</div>
+			</div>
+
+			<div class="cartridge-slot">
+				<div class="slot-label">点击下方卡带切换</div>
+				<div class="project-selector">
+					{
+						projects.map((project, index) => (
+							<button
+								class:list={[
+									"cartridge",
+									{ active: index === 0 },
+								]}
+								data-index={index}
+								data-title={project.title}
+								data-description={project.description}
+								data-media={JSON.stringify(project.media)}
+								data-tags={JSON.stringify(project.tags)}
+								data-duration={project.duration}
+								aria-label={`查看 ${project.title}`}
+							>
+								<div class="cartridge-top">
+									<div class="cartridge-grip-left" />
+									<div class="cartridge-grip-right" />
+								</div>
+								<div class="cartridge-label">
+									<img
+										src={project.cover}
+										alt={project.title}
+										class="cartridge-cover"
+									/>
+									<span class="cartridge-number">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+								</div>
+								<div class="cartridge-bottom">
+									<div class="cartridge-pins" />
+								</div>
+							</button>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ========== 写在最后 ========== -->
+	<section id="afterword" class="afterword-section">
+		<div class="container">
+			<div class="terminal-window afterword-terminal">
+				<div class="terminal-header">
+					<span class="terminal-title">afterword.exe</span>
+				</div>
+				<div class="terminal-body">
+					<div class="afterword-content">
+						<h2>
+							<span class="prefix">&gt;</span> 写在最后
+							<span class="cursor">_</span>
+						</h2>
+						<p class="afterword-subtitle">// 关于我的游戏世界观</p>
+
+						<div class="afterword-intro">
+							<p class="afterword-text">
+								感谢你耐心翻阅我的作品。如果你能看到这里，说明你是和我一样做事认真的人。现在请允许我说点心里话：作为一名行走在<span
+									class="highlight">技术</span
+								>与<span class="highlight">艺术</span
+								>交界处的开发者，我始终信奉两个信条：<span
+									class="highlight-strong">实用主义</span
+								>与<span class="highlight-strong">审美至上</span
+								>。
+							</p>
+						</div>
+
+						<div class="afterword-block">
+							<h3>
+								<span class="prefix">&gt;</span> 实用主义：技术是通往想象力的桥梁
+							</h3>
+							<p class="afterword-text">
+								自 2021 年进入<span class="highlight"
+									>北京工业大学</span
+								>以来，开发"好玩的游戏"始终是我学习技术的终极动力。对我而言，<span
+									class="highlight-strong"
+									>技术是手段而非目的</span
+								>。我并非那种闭门钻研底层算法的纯粹极客，我更像是一个<span
+									class="highlight">"工匠"</span
+								>：我学习计算机、钻研好用的AI，是为了补齐制作中最短的那块板，让创意不因技术门槛而流产。
+							</p>
+							<p class="afterword-text">
+								在<span class="highlight">爱尔兰都柏林大学</span
+								>交换期间，我选择"<span class="highlight"
+									>让大语言模型扮演游戏玩家</span
+								>"作为毕设方向并获得 <span
+									class="highlight-strong">A 等成绩</span
+								>。导师因此邀请我留校深造，但我拒绝了。比起实验室里的学术模型，我更痴迷于如何将<span
+									class="highlight">大语言模型（LLM）</span
+								>低成本、高效率地引入实际开发。我可以不是算法的创造者，但我一定是它<span
+									class="highlight-strong"
+									>最敏锐的应用者</span
+								>。目前在<span class="highlight">华威大学</span
+								>，我正继续探索"<span class="highlight"
+									>让AI辅助全流程游戏开发</span
+								>"，致力于让生产力实现质的飞跃。
+							</p>
+						</div>
+
+						<div class="afterword-block">
+							<h3>
+								<span class="prefix">&gt;</span> 审美至上：第九艺术的灵魂锚点
+							</h3>
+							<p class="afterword-text">
+								我深信，<span class="highlight-strong"
+									>审美能力是游戏设计师的护城河</span
+								>。无论技术如何更迭，视觉、听觉乃至交互中传达的"美"，是游戏作为<span
+									class="highlight">第九艺术</span
+								>能被玩家铭记的本质。
+							</p>
+							<p class="afterword-text">
+								我非常现实地看待这一点：<span
+									class="highlight-strong"
+									>人类是视觉动物</span
+								>。无论受众是追求极致体验的硬核玩家，还是在碎片化时间寻求慰藉的普通大众，优秀的视觉表现永远是<span
+									class="highlight-strong">第一生产力</span
+								>——只有先具备"让用户点进来"的审美吸引力，我们苦心经营的玩法逻辑才有机会展现在世人面前。
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ========== 联系我 ========== -->
+	<section id="contact" class="contact-section">
+		<div class="container">
+			<div class="terminal-window contact-terminal">
+				<div class="terminal-header">
+					<span class="terminal-title"
+						>communication_terminal.exe</span
+					>
+				</div>
+				<div class="terminal-body">
+					<div class="contact-content">
+						<h2>
+							<span class="prefix">&gt;</span> 联系我
+							<span class="cursor">_</span>
+						</h2>
+						<p class="subtitle">
+							//
+							如果你对我的作品感兴趣，或者想要合作，欢迎随时联系我！
+						</p>
+
+						<div class="social-links">
+							{
+								socialLinks.map((link) => (
+									<a
+										href={link.href}
+										class="social-link"
+										target={
+											link.href.startsWith("/")
+												? "_self"
+												: "_blank"
+										}
+										rel={
+											link.href.startsWith("/")
+												? undefined
+												: "noopener noreferrer"
+										}
+										aria-label={link.name}
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="24"
+											height="24"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.5"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										>
+											<path d={link.icon} />
+										</svg>
+										<span>{link.name}</span>
+									</a>
+								))
+							}
+						</div>
+
+						<div class="email-section">
+							<p class="email-label">&gt; 联系电话:</p>
+							<a href="tel:18612268031" class="email-link">
+								+86 18612268031
+							</a>
+						</div>
+
+						<div class="ascii-footer">
+							<pre>
+╔══════════════════════════════════════╗
+║  THANK YOU FOR VISITING MY TERMINAL  ║
+║         [ SYSTEM READY ]             ║
+╚══════════════════════════════════════╝
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<!-- 作品切换脚本 -->
+<script is:inline>
+	document.addEventListener("DOMContentLoaded", function () {
+		const cartridges = document.querySelectorAll(".cartridge");
+		const slideshowContainer = document.getElementById(
+			"slideshow-container",
+		);
+		const indicatorsContainer = document.getElementById("slide-indicators");
+		const prevBtn = document.getElementById("slide-prev");
+		const nextBtn = document.getElementById("slide-next");
+		const titleEl = document.getElementById("project-title");
+		const descEl = document.getElementById("project-description");
+		const durationEl = document.getElementById("project-duration");
+		const tagsEl = document.getElementById("project-tags");
+		const slotWindow = document.getElementById("cartridge-slot-window");
+		const insertedHolder = document.getElementById("inserted-holder");
+
+		const tagColorMap = {
+			blue: "var(--tag-cyan)",
+			purple: "var(--tag-purple)",
+			pink: "var(--tag-pink)",
+			green: "var(--tag-green)",
+			orange: "var(--tag-amber)",
+			amber: "var(--tag-amber)",
+			red: "var(--tag-red)",
+			cyan: "var(--tag-cyan)",
+		};
+
+		let currentInserted = null;
+		let isAnimating = false;
+
+		// ========== 轮播逻辑 ==========
+		var slideElements = [];
+		var slideIndicators = [];
+		var currentSlideIndex = 0;
+		var autoPlayTimer = null;
+		var isFirstSlide = true;
+
+		function isVideo(src) {
+			return /\.(mp4|webm|ogg)$/i.test(src);
+		}
+
+		function stopAllVideos() {
+			slideElements.forEach(function (el) {
+				if (el.tagName === "VIDEO") {
+					el.pause();
+					el.currentTime = 0;
+					el.removeAttribute("data-ended-listener");
+				}
+			});
+		}
+
+		function scheduleNext() {
+			if (autoPlayTimer) {
+				clearTimeout(autoPlayTimer);
+				autoPlayTimer = null;
+			}
+			var current = slideElements[currentSlideIndex];
+			if (current && current.tagName === "VIDEO") {
+				// 视频：等播放完毕再切换
+				var onEnded = function () {
+					current.removeEventListener("ended", onEnded);
+					goToSlide(currentSlideIndex + 1);
+					scheduleNext();
+				};
+				current.addEventListener("ended", onEnded);
+			} else {
+				// 图片：用定时器
+				var delay = isFirstSlide ? 800 : 3000;
+				autoPlayTimer = setTimeout(function () {
+					goToSlide(currentSlideIndex + 1);
+					isFirstSlide = false;
+					scheduleNext();
+				}, delay);
+			}
+		}
+
+		function goToSlide(index) {
+			if (slideElements.length === 0) return;
+			if (index < 0) index = slideElements.length - 1;
+			if (index >= slideElements.length) index = 0;
+
+			// 暂停当前视频
+			var oldEl = slideElements[currentSlideIndex];
+			if (oldEl && oldEl.tagName === "VIDEO") {
+				oldEl.pause();
+				oldEl.currentTime = 0;
+			}
+
+			// 隐藏所有
+			slideElements.forEach(function (el) {
+				el.classList.remove("active");
+				el.style.opacity = "0";
+			});
+			slideIndicators.forEach(function (dot) {
+				dot.classList.remove("active");
+				dot.style.background = "rgba(255,255,255,0.4)";
+				dot.style.transform = "scale(1)";
+			});
+
+			// 显示新的
+			currentSlideIndex = index;
+			var newEl = slideElements[currentSlideIndex];
+			newEl.classList.add("active");
+			newEl.style.opacity = "1";
+
+			// 如果是视频，从头播放
+			if (newEl.tagName === "VIDEO") {
+				newEl.currentTime = 0;
+				newEl.play();
+			}
+
+			if (slideIndicators[currentSlideIndex]) {
+				slideIndicators[currentSlideIndex].classList.add("active");
+				slideIndicators[currentSlideIndex].style.background =
+					"rgba(255,255,255,0.9)";
+				slideIndicators[currentSlideIndex].style.transform =
+					"scale(1.2)";
+			}
+		}
+
+		function nextSlide() {
+			isFirstSlide = false;
+			goToSlide(currentSlideIndex + 1);
+			resetAutoPlay();
+		}
+
+		function prevSlide() {
+			isFirstSlide = false;
+			goToSlide(currentSlideIndex - 1);
+			resetAutoPlay();
+		}
+
+		function resetAutoPlay() {
+			if (autoPlayTimer) {
+				clearTimeout(autoPlayTimer);
+				autoPlayTimer = null;
+			}
+			scheduleNext();
+		}
+
+		function applyMediaStyles(el) {
+			el.style.position = "absolute";
+			el.style.top = "0";
+			el.style.left = "0";
+			el.style.width = "100%";
+			el.style.height = "100%";
+			el.style.objectFit = "cover";
+			el.style.objectPosition = "top";
+			el.style.transition = "opacity 0.5s ease";
+		}
+
+		function startSlideshow(mediaSources, title) {
+			// 停止之前的
+			if (autoPlayTimer) {
+				clearTimeout(autoPlayTimer);
+				autoPlayTimer = null;
+			}
+			stopAllVideos();
+
+			// 重建
+			slideshowContainer.innerHTML = "";
+			indicatorsContainer.innerHTML = "";
+			slideElements = [];
+			slideIndicators = [];
+			currentSlideIndex = 0;
+			isFirstSlide = true;
+
+			mediaSources.forEach(function (src, i) {
+				var el;
+				if (isVideo(src)) {
+					el = document.createElement("video");
+					el.src = src;
+					el.muted = true;
+					el.playsInline = true;
+					el.preload = "auto";
+					el.className = "slide-media";
+				} else {
+					el = document.createElement("img");
+					el.src = src;
+					el.alt = title + " - " + (i + 1);
+					el.className = "slide-image";
+				}
+				applyMediaStyles(el);
+				el.style.opacity = i === 0 ? "1" : "0";
+				if (i === 0) el.classList.add("active");
+				slideshowContainer.appendChild(el);
+				slideElements.push(el);
+
+				var dot = document.createElement("span");
+				dot.className = "slide-indicator";
+				dot.style.width = "8px";
+				dot.style.height = "8px";
+				dot.style.borderRadius = "50%";
+				dot.style.cursor = "pointer";
+				dot.style.transition =
+					"background 0.3s ease, transform 0.3s ease";
+				dot.style.background =
+					i === 0 ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.4)";
+				dot.style.transform = i === 0 ? "scale(1.2)" : "scale(1)";
+				if (i === 0) dot.classList.add("active");
+				dot.addEventListener("click", function () {
+					isFirstSlide = false;
+					goToSlide(i);
+					resetAutoPlay();
+				});
+				indicatorsContainer.appendChild(dot);
+				slideIndicators.push(dot);
+			});
+
+			// 如果第一个是视频，立即播放
+			if (
+				slideElements.length > 0 &&
+				slideElements[0].tagName === "VIDEO"
+			) {
+				slideElements[0].play();
+			}
+
+			// 启动自动推进
+			if (mediaSources.length > 1) {
+				scheduleNext();
+			}
+		}
+
+		// 箭头点击
+		prevBtn.addEventListener("click", function (e) {
+			e.stopPropagation();
+			prevSlide();
+		});
+		nextBtn.addEventListener("click", function (e) {
+			e.stopPropagation();
+			nextSlide();
+		});
+
+		// 初始化轮播（页面初始已有 Astro 渲染的图片）
+		function initSlideshow() {
+			slideElements = Array.from(
+				slideshowContainer.querySelectorAll(
+					".slide-image, .slide-media",
+				),
+			);
+			slideIndicators = Array.from(
+				indicatorsContainer.querySelectorAll(".slide-indicator"),
+			);
+			currentSlideIndex = 0;
+			isFirstSlide = true;
+
+			// 给指示器加点击事件
+			slideIndicators.forEach(function (dot, i) {
+				dot.addEventListener("click", function () {
+					isFirstSlide = false;
+					goToSlide(i);
+					resetAutoPlay();
+				});
+			});
+
+			// 启动自动推进
+			if (slideElements.length > 1) {
+				scheduleNext();
+			}
+		}
+
+		// ========== 卡带逻辑 ==========
+
+		// 计算两个目标位置
+		function getFlightPositions(cartridge) {
+			var cartridgeRect = cartridge.getBoundingClientRect();
+			var slotRect = slotWindow.getBoundingClientRect();
+
+			// X：与槽窗水平居中对齐
+			var targetX =
+				slotRect.left + slotRect.width / 2 - cartridgeRect.width / 2;
+
+			// Phase1 Y：槽窗正下方
+			var belowY = slotRect.bottom;
+
+			// Phase2 Y：槽窗中心
+			var insideY =
+				slotRect.top + slotRect.height / 2 - cartridgeRect.height / 2;
+
+			return {
+				flyX: targetX - cartridgeRect.left,
+				belowY: belowY - cartridgeRect.top,
+				insideY: insideY - cartridgeRect.top,
+			};
+		}
+
+		function createInsertedClone(cartridge) {
+			insertedHolder.innerHTML = "";
+			var clone = cartridge.cloneNode(true);
+			clone.classList.remove(
+				"active",
+				"flying-to-slot",
+				"sliding-into-slot",
+				"inserted",
+			);
+			clone.removeAttribute("data-index");
+			insertedHolder.appendChild(clone);
+		}
+
+		function removeInsertedClone() {
+			insertedHolder.innerHTML = "";
+		}
+
+		function updateProjectInfo(cartridge) {
+			var title = cartridge.getAttribute("data-title") || "";
+			var description = cartridge.getAttribute("data-description") || "";
+			var mediaData = cartridge.getAttribute("data-media") || "[]";
+			var tagsData = cartridge.getAttribute("data-tags") || "[]";
+			var duration = cartridge.getAttribute("data-duration") || "";
+
+			// 启动新的轮播
+			var images = JSON.parse(mediaData);
+			startSlideshow(images, title);
+
+			if (titleEl) {
+				titleEl.innerHTML = '<span class="prefix">&gt;</span> ' + title;
+			}
+
+			if (durationEl && duration) {
+				durationEl.innerHTML =
+					'<span class="prefix">&gt;</span> 制作时长：' +
+					duration +
+					"周";
+			}
+
+			if (descEl) {
+				descEl.innerHTML = description;
+			}
+
+			if (tagsEl) {
+				var tags = JSON.parse(tagsData);
+				tagsEl.innerHTML = tags
+					.map(function (tag) {
+						var color = tagColorMap[tag.color] || tagColorMap.cyan;
+						return (
+							'<span class="tag" style="' +
+							"--tag-color: " +
+							color +
+							"; " +
+							"display: inline-flex; align-items: center; " +
+							"padding: 4px 8px; background: transparent; " +
+							"color: " +
+							color +
+							"; " +
+							"border: 1px solid " +
+							color +
+							"; " +
+							"font-family: var(--font-mono); font-size: 0.85rem; " +
+							"letter-spacing: 1px; text-transform: uppercase; " +
+							"transition: all var(--transition-fast);" +
+							'">' +
+							'<span style="margin-right:2px;opacity:0.6">[</span>' +
+							tag.text +
+							'<span style="margin-left:2px;opacity:0.6">]</span>' +
+							"</span>"
+						);
+					})
+					.join("");
+			}
+		}
+
+		// 两段式插入：Phase1 飞到下方 → Phase2 直线上滑
+		function flyToSlot(cartridge, callback) {
+			var pos = getFlightPositions(cartridge);
+
+			// Phase 1：飞到槽窗正下方
+			cartridge.classList.add("flying-to-slot");
+			// 用 requestAnimationFrame 确保 transition 类已应用
+			requestAnimationFrame(function () {
+				cartridge.style.transform =
+					"translate(" + pos.flyX + "px, " + pos.belowY + "px)";
+			});
+
+			setTimeout(function () {
+				// Phase 2：直线向上插入槽窗
+				cartridge.classList.remove("flying-to-slot");
+				cartridge.classList.add("sliding-into-slot");
+				requestAnimationFrame(function () {
+					cartridge.style.transform =
+						"translate(" + pos.flyX + "px, " + pos.insideY + "px)";
+					cartridge.style.opacity = "0";
+				});
+
+				setTimeout(function () {
+					// 完成：隐藏原卡带（保留inline样式不清理，防止闪回）
+					cartridge.classList.add("inserted");
+					cartridge.classList.remove("sliding-into-slot");
+					createInsertedClone(cartridge);
+					if (callback) callback();
+				}, 300);
+			}, 400);
+		}
+
+		// 飞回原位
+		function flyBack(cartridge, callback) {
+			if (!cartridge) {
+				if (callback) callback();
+				return;
+			}
+
+			removeInsertedClone();
+
+			// 此时卡带仍保留插入时的 transform 和 opacity:0
+			cartridge.classList.remove("inserted");
+			cartridge.classList.add("flying-back");
+			// RAF 中重置样式，transition 会平滑过渡回原位
+			requestAnimationFrame(function () {
+				cartridge.style.transform = "";
+				cartridge.style.opacity = "1";
+			});
+
+			setTimeout(function () {
+				cartridge.classList.remove("flying-back");
+				cartridge.classList.remove("active");
+				cartridge.style.transform = "";
+				cartridge.style.opacity = "";
+				if (callback) callback();
+			}, 400);
+		}
+
+		function initFirstCartridge() {
+			var firstCartridge = cartridges[0];
+			if (firstCartridge) {
+				firstCartridge.classList.add("active");
+				updateProjectInfo(firstCartridge);
+				setTimeout(function () {
+					flyToSlot(firstCartridge, function () {
+						currentInserted = firstCartridge;
+					});
+				}, 300);
+			}
+		}
+
+		cartridges.forEach(function (cartridge) {
+			cartridge.addEventListener("click", function () {
+				if (isAnimating || cartridge === currentInserted) return;
+				isAnimating = true;
+
+				if (currentInserted) {
+					flyBack(currentInserted, function () {
+						cartridge.classList.add("active");
+						flyToSlot(cartridge, function () {
+							currentInserted = cartridge;
+							isAnimating = false;
+						});
+						updateProjectInfo(cartridge);
+					});
+				} else {
+					cartridge.classList.add("active");
+					flyToSlot(cartridge, function () {
+						currentInserted = cartridge;
+						isAnimating = false;
+					});
+					updateProjectInfo(cartridge);
+				}
+			});
+		});
+
+		initFirstCartridge();
+	});
+</script>
+
+<style>
+	/* ========== 主页样式 ========== */
+	.hero {
+		position: relative;
+		min-height: 100vh;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+		background: radial-gradient(
+			ellipse at center,
+			#fff8ee 0%,
+			var(--color-bg) 70%
+		);
+	}
+
+	/* CRT Monitor Frame */
+	.crt-monitor {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 85%;
+		max-width: 900px;
+		z-index: 0;
+	}
+
+	.monitor-frame {
+		background: linear-gradient(
+			145deg,
+			#e8e0d3 0%,
+			#d4c8b8 50%,
+			#c5b8a5 100%
+		);
+		border-radius: 20px;
+		padding: 20px;
+		box-shadow:
+			0 20px 60px rgba(139, 115, 85, 0.3),
+			inset 0 2px 0 rgba(255, 255, 255, 0.5),
+			0 0 40px rgba(196, 127, 0, 0.1);
+	}
+
+	.monitor-bezel {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 8px 20px;
+		margin-bottom: 10px;
+	}
+
+	.power-led {
+		width: 10px;
+		height: 10px;
+		background: var(--color-primary);
+		border-radius: 50%;
+		box-shadow: 0 0 10px var(--color-primary);
+		animation: led-blink 2s ease-in-out infinite;
+	}
+
+	.brand-label {
+		font-family:
+			"Microgramma", "Eurostile", var(--font-display), sans-serif;
+		font-size: 0.9rem;
+		font-weight: bold;
+		color: var(--color-text-gold);
+		letter-spacing: 0.5px;
+	}
+
+	.screen-container {
+		background: #3d2e1f;
+		border-radius: 12px;
+		padding: 15px;
+		border: 3px solid #c5b8a5;
+	}
+
+	.screen-inner {
+		position: relative;
+		border-radius: 8px;
+		overflow: hidden;
+		aspect-ratio: 16 / 9;
+	}
+
+	.bg-video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: contrast(1.1) saturate(1.2);
+	}
+
+	.scanlines {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(0, 0, 0, 0.15) 2px,
+			rgba(0, 0, 0, 0.15) 4px
+		);
+		pointer-events: none;
+	}
+
+	.monitor-controls {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+		padding: 15px 20px 5px;
+	}
+
+	.control-knob {
+		width: 20px;
+		height: 20px;
+		background: linear-gradient(145deg, #c5b8a5, #b0a090);
+		border-radius: 50%;
+		border: 2px solid #a09080;
+	}
+
+	.control-slider {
+		width: 60px;
+		height: 8px;
+		background: #c5b8a5;
+		border-radius: 4px;
+		align-self: center;
+	}
+
+	/* Hero Content */
+	.hero-content {
+		position: relative;
+		text-align: center;
+		z-index: 1;
+		padding: var(--spacing-xl);
+		transform: translateY(-4em);
+	}
+
+	.name {
+		font-size: clamp(1.5rem, 5vw, 3rem);
+		margin-bottom: var(--spacing-md);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		/* 选中高亮效果 - 红白机风格 */
+		background-color: var(--color-primary);
+		color: #fff;
+		padding: 0.3rem 0.8rem;
+		text-shadow: none;
+	}
+
+	.prefix {
+		color: var(--color-secondary);
+	}
+
+	.name .prefix {
+		color: #fff;
+	}
+
+	.cursor {
+		animation: blink 1s step-end infinite;
+	}
+
+	.scroll-indicator {
+		position: absolute;
+		bottom: 1.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-sm);
+		color: var(--color-primary);
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		opacity: 0;
+		animation: fadeIn 0.5s ease forwards;
+		animation-delay: 0.6s;
+	}
+
+	.arrow-down {
+		animation: bounce 2s ease infinite;
+	}
+
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(8px);
+		}
+	}
+
+	/* ========== 关于我样式 ========== */
+	.about-section {
+		min-height: 100vh;
+		padding: var(--spacing-3xl) 0;
+		display: flex;
+		align-items: center;
+		background: var(--color-bg);
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.about-terminal {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	.terminal-window {
+		background: var(--color-bg-terminal);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 0 30px rgba(196, 127, 0, 0.1);
+	}
+
+	.terminal-header {
+		background: linear-gradient(90deg, #efe8dc, #f5efe5);
+		padding: 10px 16px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		border-bottom: 1px solid var(--color-border-dim);
+	}
+
+	.terminal-header::before {
+		content: "● ● ●";
+		font-size: 8px;
+		letter-spacing: 4px;
+		color: var(--color-primary);
+	}
+
+	.terminal-title {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+	}
+
+	.terminal-body {
+		padding: var(--spacing-xl);
+	}
+
+	.about-content {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: var(--spacing-2xl);
+		align-items: start;
+	}
+
+	.portrait-wrapper {
+		width: 180px;
+		height: 180px;
+		position: relative;
+		border: 2px solid var(--color-primary);
+		overflow: hidden;
+		box-shadow: 0 0 20px rgba(196, 127, 0, 0.2);
+	}
+
+	.portrait {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: contrast(1.1);
+	}
+
+	.portrait-scanline {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(196, 127, 0, 0.03) 2px,
+			rgba(196, 127, 0, 0.03) 4px
+		);
+		pointer-events: none;
+	}
+
+	.info-section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-md);
+	}
+
+	.info-line {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		display: flex;
+		gap: var(--spacing-sm);
+	}
+
+	.label {
+		color: var(--color-primary);
+	}
+
+	.value {
+		color: var(--color-text);
+	}
+
+	.status-online {
+		color: var(--color-primary);
+		animation: pulse-glow 2s ease infinite;
+	}
+
+	.experience-section {
+		margin-top: var(--spacing-md);
+	}
+
+	.experience-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-xs);
+		margin-top: var(--spacing-sm);
+		padding-left: 1rem;
+		border-left: 2px solid var(--color-primary);
+	}
+
+	.experience-item {
+		display: flex;
+		gap: var(--spacing-sm);
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		line-height: 1.6;
+		padding-left: var(--spacing-sm);
+	}
+
+	.exp-period {
+		color: var(--color-primary);
+		white-space: nowrap;
+		min-width: 5em;
+	}
+
+	.exp-detail {
+		color: var(--color-text);
+	}
+
+	.bio {
+		margin-top: var(--spacing-md);
+	}
+
+	.bio-text {
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+		line-height: 1.8;
+		color: var(--color-text);
+		margin-top: var(--spacing-sm);
+		max-width: none;
+	}
+
+	:global(.skill-highlight) {
+		color: #ff4d4d;
+		font-weight: 700;
+	}
+
+	/* ========== 作品集样式 ========== */
+	.portfolio-section {
+		min-height: 100vh;
+		padding: var(--spacing-2xl) 0;
+		display: flex;
+		align-items: center;
+		background: linear-gradient(
+			180deg,
+			var(--color-bg) 0%,
+			var(--color-bg-light) 100%
+		);
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.section-title {
+		text-align: center;
+		margin-top: var(--spacing-md);
+		margin-bottom: var(--spacing-lg);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.game-console {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr;
+		gap: var(--spacing-2xl);
+		margin-top: var(--spacing-2xl);
+		margin-bottom: var(--spacing-xl);
+		align-items: center;
+	}
+
+	.console-screen {
+		background: linear-gradient(145deg, #efe8dc, #e5ddd0);
+		border-radius: 12px;
+		padding: 20px;
+		border: 3px solid #d4c4a8;
+		box-shadow:
+			inset 0 0 30px rgba(139, 115, 85, 0.1),
+			0 0 20px rgba(196, 127, 0, 0.1);
+	}
+
+	.screen-bezel {
+		position: relative;
+		background: #3d2e1f;
+		border-radius: 8px;
+		overflow: hidden;
+		aspect-ratio: 16 / 9;
+	}
+
+	/* 卡带插入窗口 */
+	.cartridge-slot-window {
+		position: relative;
+		margin: 12px auto -20px;
+		width: 160px;
+		height: 120px;
+		border-radius: 6px 6px 0 0;
+		overflow: hidden;
+		background: linear-gradient(180deg, #2d1f15 0%, #3d2e1f 100%);
+		box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.5);
+		border: 1px solid #1a1108;
+		border-bottom: none;
+	}
+
+	.slot-window-glass {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: transparent;
+		backdrop-filter: none;
+		pointer-events: none;
+		z-index: 2;
+		border-radius: 6px;
+		box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+	}
+
+	.inserted-cartridge-holder {
+		position: absolute;
+		top: 48%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/* 克隆卡带在槽窗内的样式 */
+	.inserted-cartridge-holder .cartridge {
+		cursor: default;
+		transform: scale(1.17);
+		pointer-events: none;
+		opacity: 0;
+		animation: slide-into-slot 0.4s ease-out forwards;
+		border-color: var(--color-primary);
+		box-shadow: 0 0 15px rgba(139, 27, 44, 0.4);
+	}
+
+	.inserted-cartridge-holder .cartridge-number {
+		color: var(--color-primary);
+		text-shadow: 0 0 8px var(--color-primary);
+	}
+
+	@keyframes slide-into-slot {
+		0% {
+			opacity: 0;
+			transform: scale(1.17) translateY(40px);
+		}
+		60% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 1;
+			transform: scale(1.17) translateY(0);
+		}
+	}
+
+	/* Phase 1：飞到槽窗正下方 */
+	.cartridge.flying-to-slot {
+		position: relative;
+		z-index: 100;
+		transition: transform 0.4s ease-out;
+	}
+
+	/* Phase 2：从下方直线上滑进入槽窗 */
+	.cartridge.sliding-into-slot {
+		position: relative;
+		z-index: 100;
+		transition:
+			transform 0.3s ease-in,
+			opacity 0.3s ease-in;
+	}
+
+	/* 卡带已插入状态 - 隐藏原卡带 */
+	.cartridge.inserted {
+		visibility: hidden;
+	}
+
+	/* 卡带飞回原位动画 */
+	.cartridge.flying-back {
+		position: relative;
+		z-index: 100;
+		visibility: visible;
+		transition:
+			transform 0.4s ease-out,
+			opacity 0.3s ease-out;
+	}
+
+	/* ========== 轮播样式 ========== */
+	.slideshow-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.slide-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.slide-image.active {
+		opacity: 1;
+	}
+
+	.slide-arrow {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(0, 0, 0, 0.3);
+		color: rgba(255, 255, 255, 0.7);
+		border: none;
+		font-size: 2rem;
+		line-height: 1;
+		padding: 12px 8px;
+		cursor: pointer;
+		z-index: 3;
+		opacity: 0;
+		transition:
+			opacity 0.3s ease,
+			background 0.3s ease;
+	}
+
+	.screen-bezel:hover .slide-arrow {
+		opacity: 1;
+	}
+
+	.slide-arrow:hover {
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+	}
+
+	.slide-arrow-left {
+		left: 0;
+		border-radius: 0 4px 4px 0;
+	}
+
+	.slide-arrow-right {
+		right: 0;
+		border-radius: 4px 0 0 4px;
+	}
+
+	.slide-indicators {
+		position: absolute;
+		bottom: 8px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 6px;
+		z-index: 3;
+	}
+
+	.slide-indicator {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.4);
+		cursor: pointer;
+		transition:
+			background 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	.slide-indicator.active {
+		background: rgba(255, 255, 255, 0.9);
+		transform: scale(1.2);
+	}
+
+	.slide-indicator:hover {
+		background: rgba(255, 255, 255, 0.7);
+	}
+
+	.screen-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(0, 0, 0, 0.1) 2px,
+			rgba(0, 0, 0, 0.1) 4px
+		);
+		pointer-events: none;
+		z-index: 4;
+	}
+
+	.project-info {
+		padding: var(--spacing-lg);
+	}
+
+	.project-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: var(--spacing-md);
+	}
+
+	.project-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-sm);
+		margin-bottom: var(--spacing-lg);
+	}
+
+	.project-duration {
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+		color: var(--color-primary);
+		margin-bottom: var(--spacing-md);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.project-desc {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		line-height: 1.8;
+		color: var(--color-text);
+	}
+
+	/* Cartridge Slot */
+	.cartridge-slot {
+		text-align: center;
+	}
+
+	.slot-label {
+		font-family: var(--font-display);
+		font-size: 0.95rem;
+		color: var(--color-primary);
+		letter-spacing: 3px;
+		margin-bottom: var(--spacing-md);
+		animation: slot-label-blink 2s ease-in-out infinite;
+	}
+
+	@keyframes slot-label-blink {
+		0%,
+		100% {
+			opacity: 1;
+			text-shadow:
+				0 0 8px var(--color-primary),
+				0 0 16px var(--color-primary);
+		}
+		50% {
+			opacity: 0.5;
+			text-shadow: none;
+		}
+	}
+
+	.project-selector {
+		display: flex;
+		justify-content: center;
+		gap: var(--spacing-lg);
+		flex-wrap: wrap;
+	}
+
+	.cartridge {
+		display: flex;
+		flex-direction: column-reverse;
+		background: linear-gradient(
+			0deg,
+			#e8e0d3 0%,
+			#d4c8b8 50%,
+			#c5b8a5 100%
+		);
+		border: 2px solid #b0a090;
+		border-radius: 2px 2px 6px 6px;
+		padding: 0;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		min-width: 140px;
+		overflow: hidden;
+		box-shadow:
+			2px 2px 0 rgba(0, 0, 0, 0.1),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+	}
+
+	/* 卡带顶部 - 带凹槽手柄 */
+	.cartridge-top {
+		height: 14px;
+		background: linear-gradient(180deg, #c5b8a5 0%, #b8ab98 100%);
+		border-bottom: 1px solid #a09080;
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 6px;
+	}
+
+	.cartridge-grip-left,
+	.cartridge-grip-right {
+		width: 16px;
+		height: 6px;
+		background: linear-gradient(180deg, #a09080, #8a7a6a);
+		border-radius: 0 0 3px 3px;
+	}
+
+	/* 卡带标签贴纸区域 */
+	.cartridge-label {
+		position: relative;
+		margin: 6px 8px;
+		border: 1px solid #d4c4a8;
+		border-radius: 3px;
+		overflow: hidden;
+		height: 80px;
+	}
+
+	.cartridge-cover {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.cartridge-number {
+		position: absolute;
+		top: 4px;
+		left: 4px;
+		font-family: var(--font-display);
+		font-size: 0.75rem;
+		color: #fff;
+		background: rgba(0, 0, 0, 0.5);
+		padding: 1px 5px;
+		border-radius: 2px;
+		line-height: 1.2;
+	}
+
+	/* 卡带底部 - 金手指引脚 */
+	.cartridge-bottom {
+		height: 14px;
+		background: linear-gradient(180deg, #b8ab98 0%, #a09080 100%);
+		border-top: 1px solid #c5b8a5;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.cartridge-pins {
+		width: 60%;
+		height: 6px;
+		background: repeating-linear-gradient(
+			90deg,
+			#c8a84e 0px,
+			#c8a84e 3px,
+			#a08030 3px,
+			#a08030 4px
+		);
+		border-radius: 0 0 2px 2px;
+		box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+	}
+
+	.cartridge:hover {
+		border-color: var(--color-primary);
+		transform: translateY(-5px);
+		box-shadow:
+			0 10px 30px rgba(139, 27, 44, 0.2),
+			2px 2px 0 rgba(0, 0, 0, 0.1),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+	}
+
+	.cartridge:hover .cartridge-number {
+		color: var(--color-primary);
+		text-shadow: 0 0 10px var(--color-primary);
+	}
+
+	.cartridge.active {
+		border-color: var(--color-primary);
+		box-shadow:
+			0 0 20px rgba(139, 27, 44, 0.3),
+			inset 0 0 20px rgba(139, 27, 44, 0.05);
+	}
+
+	.cartridge.active .cartridge-number {
+		color: var(--color-primary);
+		text-shadow: 0 0 10px var(--color-primary);
+	}
+
+	.cartridge.inserting {
+		animation: cartridge-insert 0.3s ease;
+	}
+
+	/* ========== 写在最后样式 ========== */
+	.afterword-section {
+		min-height: 100vh;
+		padding: var(--spacing-3xl) 0;
+		display: flex;
+		align-items: center;
+		background: linear-gradient(
+			180deg,
+			var(--color-bg-light) 0%,
+			var(--color-bg) 100%
+		);
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.afterword-terminal {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	.afterword-content h2 {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: var(--spacing-sm);
+	}
+
+	.afterword-subtitle {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		color: var(--color-text-muted);
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.afterword-intro {
+		margin-bottom: var(--spacing-2xl);
+		padding-bottom: var(--spacing-2xl);
+		border-bottom: 1px dashed var(--color-border-dim);
+	}
+
+	.afterword-block {
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.afterword-block:last-child {
+		margin-bottom: 0;
+	}
+
+	.afterword-block h3 {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: var(--spacing-lg);
+	}
+
+	.afterword-text {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		line-height: 2;
+		color: var(--color-text);
+		margin-bottom: var(--spacing-md);
+		max-width: none;
+	}
+
+	.afterword-text:last-child {
+		margin-bottom: 0;
+	}
+
+	.highlight {
+		color: var(--color-primary);
+		font-weight: bold;
+	}
+
+	.highlight-strong {
+		color: #fff;
+		background-color: var(--color-primary);
+		padding: 0.1rem 0.4rem;
+	}
+
+	/* ========== 联系我样式 ========== */
+	.contact-section {
+		min-height: 100vh;
+		padding: var(--spacing-3xl) 0;
+		display: flex;
+		align-items: center;
+		background: var(--color-bg);
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	.contact-terminal {
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.contact-content {
+		text-align: center;
+	}
+
+	.contact-content h2 {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-bottom: var(--spacing-md);
+	}
+
+	.subtitle {
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		color: var(--color-text-muted);
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.social-links {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: var(--spacing-md);
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.social-link {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-sm);
+		padding: var(--spacing-md) var(--spacing-lg);
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		color: var(--color-text-muted);
+		transition: all var(--transition-normal);
+		min-width: 90px;
+	}
+
+	.social-link:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+		box-shadow: 0 0 20px rgba(196, 127, 0, 0.2);
+		transform: translateY(-3px);
+	}
+
+	.social-link span {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+	}
+
+	.email-section {
+		padding-top: var(--spacing-xl);
+		border-top: 1px solid var(--color-border-dim);
+	}
+
+	.email-label {
+		font-family: var(--font-mono);
+		color: var(--color-primary);
+		margin-bottom: var(--spacing-sm);
+	}
+
+	.email-link {
+		font-family: var(--font-display);
+		font-size: 0.9rem;
+		color: var(--color-secondary);
+		letter-spacing: 1px;
+	}
+
+	.email-link:hover {
+		color: var(--color-primary);
+		text-shadow: 0 0 20px var(--color-primary);
+	}
+
+	.ascii-footer {
+		margin-top: var(--spacing-2xl);
+	}
+
+	.ascii-footer pre {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		color: var(--color-border);
+		line-height: 1.4;
+	}
+
+	/* ========== 响应式 ========== */
+	@media (max-width: 900px) {
+		.about-content {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+
+		.portrait-section {
+			display: flex;
+			justify-content: center;
+		}
+
+		.portrait-wrapper {
+			width: 150px;
+			height: 150px;
+		}
+
+		.info-line {
+			justify-content: center;
+		}
+
+		.tags {
+			justify-content: center;
+		}
+
+		.game-console {
+			grid-template-columns: 1fr;
+		}
+
+		.project-info {
+			text-align: center;
+		}
+
+		.project-title {
+			justify-content: center;
+		}
+
+		.project-tags {
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.crt-monitor {
+			width: 95%;
+		}
+
+		.name {
+			font-size: 1.2rem;
+		}
+
+		.cartridge {
+			min-width: 110px;
+		}
+
+		.cartridge-number {
+			font-size: 0.8rem;
+		}
+
+		.ascii-footer pre {
+			font-size: 0.5rem;
+		}
+	}
+</style>

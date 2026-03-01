@@ -1,0 +1,458 @@
+/* ===== 自定义字体导入 ===== */
+@font-face {
+	font-family: 'Microgramma';
+	src: url('/fonts/Microgramma D Extended Bold.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Zpix';
+	src: url('/fonts/zpix.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ===== 复古电脑风格 - CSS Variables ===== */
+:root {
+	/* Colors - Light Amber Theme (浅色主题) */
+	--color-bg: #faf6f0;
+	--color-bg-light: #fff8ee;
+	--color-bg-terminal: #f5efe5;
+	--color-primary: #8B1B2C;
+	/* 红白机深红色 */
+	--color-secondary: #af0f1f;
+	/* 深红色 */
+	--color-accent: #e63946;
+	/* 亮红色 */
+	--color-amber: #c41e3a;
+	/* 红白机红 */
+	--color-text: #5a4632;
+	/* 深棕色文字 */
+	--color-text-bright: #3d2e1f;
+	--color-text-muted: #8b7355;
+	--color-text-gold: #D3AF37;
+	--color-text-motto: #fcf8f8;
+	--color-border: rgba(196, 30, 58, 0.4);
+	--color-border-dim: rgba(196, 30, 58, 0.2);
+
+
+	/* Tag Colors - Amber Retro */
+	--tag-cyan: #B83A2D;
+	--tag-green: #3e6868;
+	--tag-amber: #01344f;
+	--tag-pink: #5e7381;
+	--tag-purple: #658761;
+	--tag-red: #dfa05d;
+
+
+	/* Typography - Pixel Fonts */
+	--font-primary: 'Zpix', 'VT323', 'Courier New', monospace;
+	--font-display: 'Press Start 2P', 'VT323', monospace;
+	--font-mono: 'VT323', 'Courier New', monospace;
+
+	/* Spacing */
+	--spacing-xs: 0.25rem;
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 2rem;
+	--spacing-2xl: 3rem;
+	--spacing-3xl: 4rem;
+
+	/* Transitions */
+	--transition-fast: 150ms ease;
+	--transition-normal: 300ms ease;
+	--transition-slow: 500ms ease;
+
+	/* Border Radius - Pixel Style */
+	--radius-sm: 0px;
+	--radius-md: 4px;
+	--radius-lg: 8px;
+	--radius-xl: 8px;
+	--radius-full: 0px;
+
+	/* CRT Effect */
+	--scanline-opacity: 0.08;
+	--glow-intensity: 0.6;
+}
+
+/* ===== CSS Reset ===== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-snap-type: y mandatory;
+	overflow-y: scroll;
+}
+
+body {
+	font-family: var(--font-primary);
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	line-height: 1.6;
+	min-height: 100vh;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: auto;
+	font-size: 18px;
+	letter-spacing: 0.5px;
+	font-weight: bold;
+}
+
+/* CRT Scanline Overlay */
+body::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: repeating-linear-gradient(0deg,
+			transparent,
+			transparent 2px,
+			rgba(196, 30, 58, var(--scanline-opacity)) 2px,
+			rgba(196, 30, 58, var(--scanline-opacity)) 4px);
+	pointer-events: none;
+	z-index: 9999;
+}
+
+img,
+video {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+a {
+	color: var(--color-primary);
+	text-decoration: none;
+	transition: all var(--transition-fast);
+}
+
+a:hover {
+	color: var(--color-secondary);
+	text-shadow: 0 0 10px var(--color-secondary);
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+button {
+	font-family: inherit;
+	cursor: pointer;
+	border: none;
+	background: none;
+}
+
+/* ===== Typography ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	line-height: 1.4;
+	color: var(--color-primary);
+	text-shadow: 0 0 20px rgba(196, 30, 58, var(--glow-intensity));
+}
+
+h1 {
+	font-size: clamp(1.5rem, 4vw, 2.5rem);
+	letter-spacing: 2px;
+}
+
+h2 {
+	font-size: clamp(1rem, 3vw, 1.8rem);
+	letter-spacing: 1px;
+}
+
+h3 {
+	font-size: clamp(0.8rem, 2vw, 1.2rem);
+	letter-spacing: 1px;
+}
+
+p {
+	color: var(--color-text);
+	max-width: 65ch;
+	font-size: 1.1rem;
+}
+
+/* ===== Terminal Style ===== */
+.terminal-window {
+	background: var(--color-bg-terminal);
+	border: 2px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.terminal-header {
+	background: linear-gradient(90deg, #efe8dc, #f5efe5);
+	padding: 8px 16px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	border-bottom: 1px solid var(--color-border-dim);
+}
+
+.terminal-header::before {
+	content: "● ● ●";
+	font-size: 10px;
+	letter-spacing: 4px;
+	color: var(--color-primary);
+}
+
+.terminal-body {
+	padding: var(--spacing-lg);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+
+@keyframes blink {
+
+	0%,
+	50% {
+		opacity: 1;
+	}
+
+	51%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes pulse-glow {
+
+	0%,
+	100% {
+		text-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary);
+	}
+
+	50% {
+		text-shadow: 0 0 20px var(--color-primary), 0 0 40px var(--color-primary);
+	}
+}
+
+@keyframes led-blink {
+
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.5;
+	}
+}
+
+
+
+/* Cartridge Insert Animation */
+@keyframes cartridge-insert {
+	0% {
+		transform: translateY(-20px);
+		opacity: 0.5;
+	}
+
+	50% {
+		transform: translateY(5px);
+	}
+
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes cartridge-glow {
+
+	0%,
+	100% {
+		box-shadow: 0 0 10px var(--color-primary), inset 0 0 20px rgba(196, 30, 58, 0.1);
+	}
+
+	50% {
+		box-shadow: 0 0 20px var(--color-primary), 0 0 40px var(--color-secondary), inset 0 0 30px rgba(196, 30, 58, 0.2);
+	}
+}
+
+/* ===== Utility Classes ===== */
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 var(--spacing-lg);
+}
+
+.animate-fade-in {
+	animation: fadeIn var(--transition-slow) ease forwards;
+}
+
+.animate-fade-in-up {
+	animation: fadeInUp 0.8s ease forwards;
+}
+
+/* ===== Page Sections ===== */
+.page-section {
+	padding-top: 80px;
+}
+
+/* ===== Scrollbar - Retro Style ===== */
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-bg);
+	border-left: 1px solid var(--color-border-dim);
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+	border: 2px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-primary);
+	box-shadow: 0 0 10px var(--color-primary);
+}
+
+/* ===== BGM Toggle Button - Retro ===== */
+.bgm-toggle {
+	position: fixed;
+	bottom: 24px;
+	right: 24px;
+	width: 48px;
+	height: 48px;
+	border-radius: 0;
+	background: var(--color-bg-terminal);
+	border: 2px solid var(--color-primary);
+	color: var(--color-primary);
+	cursor: pointer;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all var(--transition-normal);
+	box-shadow:
+		3px 3px 0 var(--color-bg),
+		6px 6px 0 var(--color-primary);
+}
+
+.bgm-toggle:hover {
+	background: rgba(196, 30, 58, 0.1);
+	color: var(--color-text-bright);
+	box-shadow:
+		0 0 20px var(--color-primary),
+		3px 3px 0 var(--color-bg),
+		6px 6px 0 var(--color-primary);
+}
+
+.bgm-toggle .icon-music-on {
+	display: none;
+}
+
+.bgm-toggle .icon-music-off {
+	display: block;
+}
+
+.bgm-toggle.playing .icon-music-on {
+	display: block;
+	animation: pulse-glow 1.5s ease infinite;
+}
+
+.bgm-toggle.playing .icon-music-off {
+	display: none;
+}
+
+.bgm-toggle.playing {
+	background: rgba(196, 30, 58, 0.2);
+	color: var(--color-primary);
+	animation: cartridge-glow 2s ease infinite;
+}
+
+
+
+/* ===== Tag - Retro Pixel Style ===== */
+
+.tag,
+:global(.tag) {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 12px;
+	background: transparent;
+	color: var(--tag-color, var(--color-primary));
+	border: 1px solid var(--tag-color, var(--color-primary));
+	font-family: var(--font-mono);
+	font-size: 0.9rem;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.tag::before,
+:global(.tag)::before {
+	content: "[";
+	margin-right: 2px;
+	opacity: 0.7;
+}
+
+.tag::after,
+:global(.tag)::after {
+	content: "]";
+	margin-left: 2px;
+	opacity: 0.7;
+}
+
+/* ===== Common UI Elements ===== */
+.prefix {
+	color: var(--color-secondary);
+}
+
+.cursor {
+	animation: blink 1s step-end infinite;
+}
+
+/* ===== Selection Style ===== */
+::selection {
+	background: var(--color-primary);
+	color: var(--color-bg);
+}
+
+::-moz-selection {
+	background: var(--color-primary);
+	color: var(--color-bg);
+}

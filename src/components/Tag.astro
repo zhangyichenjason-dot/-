@@ -1,0 +1,65 @@
+---
+interface Props {
+    text: string;
+    color?:
+        | "blue"
+        | "purple"
+        | "pink"
+        | "green"
+        | "orange"
+        | "red"
+        | "cyan"
+        | "amber";
+}
+
+const { text, color = "green" } = Astro.props;
+
+const colorMap = {
+    blue: "var(--tag-cyan)",
+    purple: "var(--tag-purple)",
+    pink: "var(--tag-pink)",
+    green: "var(--tag-green)",
+    orange: "var(--tag-amber)",
+    red: "var(--tag-red)",
+    cyan: "var(--tag-cyan)",
+    amber: "var(--tag-amber)",
+};
+---
+
+<span class="tag" style={`--tag-color: ${colorMap[color]}`}>
+    {text}
+</span>
+
+<style>
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        background: transparent;
+        color: var(--tag-color, var(--color-primary));
+        border: 1px solid var(--tag-color, var(--color-primary));
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all var(--transition-fast);
+    }
+
+    .tag::before {
+        content: "[";
+        margin-right: 2px;
+        opacity: 0.6;
+    }
+
+    .tag::after {
+        content: "]";
+        margin-left: 2px;
+        opacity: 0.6;
+    }
+
+    .tag:hover {
+        background: color-mix(in srgb, var(--tag-color) 15%, transparent);
+        box-shadow: 0 0 10px
+            color-mix(in srgb, var(--tag-color) 50%, transparent);
+    }
+</style>

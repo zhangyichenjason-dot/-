@@ -1,0 +1,335 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="微信联系 | Jason 张奕晨">
+    <section class="wechat-page">
+        <div class="container">
+            <a href="/" class="back-link">
+                <span class="prefix">&lt;</span> 返回首页
+            </a>
+
+            <div class="terminal-window wechat-terminal">
+                <div class="terminal-header">
+                    <span class="terminal-title">wechat_connect.exe</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="wechat-content">
+                        <h1>
+                            <span class="prefix">&gt;</span> 添加微信
+                            <span class="cursor">_</span>
+                        </h1>
+                        <p class="wechat-subtitle">
+                            // 欢迎通过微信与我联系，期待与你的交流！
+                        </p>
+
+                        <div class="wechat-icon-area">
+                            <div class="wechat-icon-wrapper">
+                                <img
+                                    src="/images/wechat-avatar.png"
+                                    alt="微信头像"
+                                    class="wechat-avatar"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="info-cards">
+                            <div class="info-card">
+                                <div class="card-header">
+                                    <span class="card-icon">🎮</span>
+                                    <span class="card-label">&gt; 微信号</span>
+                                </div>
+                                <div class="card-body">
+                                    <span class="card-value" id="wechat-id"
+                                        >P0T3029</span
+                                    >
+                                    <button
+                                        class="copy-btn"
+                                        data-copy="P0T3029"
+                                        aria-label="复制微信号"
+                                    >
+                                        <span class="copy-text">复制</span>
+                                        <span class="copied-text">已复制 ✓</span
+                                        >
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="card-header">
+                                    <span class="card-icon">👾</span>
+                                    <span class="card-label">&gt; 手机号</span>
+                                </div>
+                                <div class="card-body">
+                                    <span class="card-value" id="phone-number"
+                                        >18612268031</span
+                                    >
+                                    <button
+                                        class="copy-btn"
+                                        data-copy="18612268031"
+                                        aria-label="复制手机号"
+                                    >
+                                        <span class="copy-text">复制</span>
+                                        <span class="copied-text">已复制 ✓</span
+                                        >
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ascii-divider">
+                            <pre>
+╔══════════════════════════════════════╗
+║     WAITING FOR YOUR CONNECTION...   ║
+║           [ ONLINE ]                 ║
+╚══════════════════════════════════════╝
+							</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        const copyBtns = document.querySelectorAll(".copy-btn");
+        copyBtns.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const text = btn.getAttribute("data-copy");
+                navigator.clipboard.writeText(text).then(function () {
+                    btn.classList.add("copied");
+                    setTimeout(function () {
+                        btn.classList.remove("copied");
+                    }, 2000);
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+    .wechat-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl) 0;
+        background: radial-gradient(
+            ellipse at center,
+            #fff8ee 0%,
+            var(--color-bg) 70%
+        );
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-lg);
+        padding: 8px 16px;
+        border: 1px solid var(--color-border);
+        transition: all var(--transition-normal);
+    }
+
+    .back-link:hover {
+        background: rgba(196, 30, 58, 0.1);
+        box-shadow: 0 0 15px rgba(196, 30, 58, 0.2);
+    }
+
+    .wechat-terminal {
+        max-width: 700px;
+        margin: 0 auto;
+        box-shadow: 0 0 30px rgba(196, 127, 0, 0.1);
+    }
+
+    .wechat-content {
+        padding: var(--spacing-md);
+    }
+
+    .wechat-content h1 {
+        font-size: clamp(1rem, 3vw, 1.8rem);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .wechat-subtitle {
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: 0.95rem;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    /* 微信图标区域 */
+    .wechat-icon-area {
+        display: flex;
+        justify-content: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .wechat-icon-wrapper {
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--color-border);
+        background: linear-gradient(
+            145deg,
+            var(--color-bg-light) 0%,
+            var(--color-bg-terminal) 100%
+        );
+        box-shadow:
+            0 0 20px rgba(196, 30, 58, 0.15),
+            inset 0 0 30px rgba(196, 30, 58, 0.05);
+        animation: icon-pulse 3s ease-in-out infinite;
+    }
+
+    .wechat-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+    }
+
+    @keyframes icon-pulse {
+        0%,
+        100% {
+            box-shadow:
+                0 0 20px rgba(196, 30, 58, 0.15),
+                inset 0 0 30px rgba(196, 30, 58, 0.05);
+        }
+        50% {
+            box-shadow:
+                0 0 35px rgba(196, 30, 58, 0.3),
+                inset 0 0 40px rgba(196, 30, 58, 0.1);
+        }
+    }
+
+    /* 信息卡片 */
+    .info-cards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .info-card {
+        border: 1px solid var(--color-border);
+        background: var(--color-bg-light);
+        padding: var(--spacing-md);
+        transition: all var(--transition-normal);
+    }
+
+    .info-card:hover {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 20px rgba(196, 30, 58, 0.15);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .card-icon {
+        font-size: 1.2rem;
+    }
+
+    .card-label {
+        font-family: var(--font-mono);
+        color: var(--color-primary);
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+    }
+
+    .card-body {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-md);
+    }
+
+    .card-value {
+        font-family: var(--font-mono);
+        font-size: 1.4rem;
+        color: var(--color-text-bright);
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(196, 30, 58, 0.2);
+    }
+
+    /* 复制按钮 */
+    .copy-btn {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--color-primary);
+        padding: 6px 16px;
+        border: 1px solid var(--color-primary) !important;
+        background: transparent;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        position: relative;
+    }
+
+    .copy-btn:hover {
+        background: rgba(196, 30, 58, 0.1);
+        box-shadow: 0 0 10px rgba(196, 30, 58, 0.2);
+    }
+
+    .copy-btn .copied-text {
+        display: none;
+    }
+
+    .copy-btn.copied .copy-text {
+        display: none;
+    }
+
+    .copy-btn.copied .copied-text {
+        display: inline;
+    }
+
+    .copy-btn.copied {
+        border-color: #2ecc40 !important;
+        color: #2ecc40;
+    }
+
+    /* ASCII 底部 */
+    .ascii-divider {
+        text-align: center;
+        margin-top: var(--spacing-lg);
+    }
+
+    .ascii-divider pre {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* 响应式 */
+    @media (max-width: 600px) {
+        .wechat-content {
+            padding: var(--spacing-sm);
+        }
+
+        .card-value {
+            font-size: 1.1rem;
+        }
+
+        .wechat-icon-wrapper {
+            width: 100px;
+            height: 100px;
+        }
+
+        .wechat-icon {
+            width: 60px;
+            height: 60px;
+        }
+    }
+</style>
