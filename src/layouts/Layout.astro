@@ -140,23 +140,22 @@ const {
 				}, 60);
 
 				// 收集需要预加载的资源
-				var resources = [];
+				var loadItems = [];
 
-				// 收集所有 video source
-				var videos = document.querySelectorAll("video source");
-				videos.forEach(function (source) {
-					if (source.src)
-						resources.push({ type: "video", url: source.src });
+				// 收集所有 video 元素（直接监听其 canplaythrough 事件）
+				var videoEls = mainContent.querySelectorAll("video");
+				videoEls.forEach(function (video) {
+					loadItems.push({ type: "video", el: video });
 				});
 
 				// 收集所有 img（排除加载页面自身的元素）
 				var images = mainContent.querySelectorAll("img");
 				images.forEach(function (img) {
 					if (img.src)
-						resources.push({ type: "image", url: img.src });
+						loadItems.push({ type: "image", url: img.src });
 				});
 
-				var totalResources = resources.length;
+				var totalResources = loadItems.length;
 				var loadedCount = 0;
 				var currentPercent = 0;
 
@@ -208,19 +207,30 @@ const {
 				if (totalResources === 0) {
 					animatePercent(100);
 				} else {
-					resources.forEach(function (res) {
-						if (res.type === "video") {
-							var xhr = new XMLHttpRequest();
-							xhr.open("GET", res.url, true);
-							xhr.responseType = "blob";
-							xhr.onload = updateProgress;
-							xhr.onerror = updateProgress;
-							xhr.send();
+					loadItems.forEach(function (item) {
+						if (item.type === "video") {
+							var video = item.el;
+							// 确保视频开始加载
+							video.preload = "auto";
+							if (video.readyState >= 4) {
+								// HAVE_ENOUGH_DATA - 已经可以播放
+								updateProgress();
+							} else {
+								video.addEventListener(
+									"canplaythrough",
+									function () {
+										updateProgress();
+									},
+									{ once: true },
+								);
+								// 触发加载
+								video.load();
+							}
 						} else {
 							var img = new Image();
 							img.onload = updateProgress;
 							img.onerror = updateProgress;
-							img.src = res.url;
+							img.src = item.url;
 						}
 					});
 				}
