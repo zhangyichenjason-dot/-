@@ -187,13 +187,21 @@ const {
 				}
 
 				function finishLoading() {
-					setTimeout(function () {
-						loadingScreen.classList.add("fade-out");
-						mainContent.style.opacity = "1";
-						setTimeout(function () {
-							loadingScreen.style.display = "none";
-						}, 600);
-					}, 400);
+					// 先让主内容可见（在加载页面下方渲染）
+					mainContent.style.transition = "none";
+					mainContent.style.opacity = "1";
+
+					// 等待浏览器完成渲染后再淡出加载页面
+					requestAnimationFrame(function () {
+						requestAnimationFrame(function () {
+							setTimeout(function () {
+								loadingScreen.classList.add("fade-out");
+								setTimeout(function () {
+									loadingScreen.style.display = "none";
+								}, 600);
+							}, 200);
+						});
+					});
 				}
 
 				// 如果没有需要加载的资源，直接完成
