@@ -245,9 +245,31 @@ const {
 							},
 							{ once: true },
 						);
+						// 视频加载失败时（格式不支持/网络错误）也放行
+						heroVideo.addEventListener(
+							"error",
+							function () {
+								onHeroVideoReady();
+							},
+							{ once: true },
+						);
+						// source 元素的 error 事件也需要监听
+						var heroSources = heroVideo.querySelectorAll("source");
+						heroSources.forEach(function (source) {
+							source.addEventListener(
+								"error",
+								function () {
+									onHeroVideoReady();
+								},
+								{ once: true },
+							);
+						});
 						heroVideo.preload = "auto";
 						heroVideo.load();
-						heroVideo.play().catch(function () {});
+						heroVideo.play().catch(function () {
+							// autoplay 被浏览器阻止时，不阻塞页面加载
+							onHeroVideoReady();
+						});
 					}
 				}
 
@@ -270,9 +292,18 @@ const {
 									},
 									{ once: true },
 								);
+								video.addEventListener(
+									"error",
+									function () {
+										updateProgress();
+									},
+									{ once: true },
+								);
 								video.preload = "auto";
 								video.load();
-								video.play().catch(function () {});
+								video.play().catch(function () {
+									updateProgress();
+								});
 							}
 						} else {
 							var img = new Image();
