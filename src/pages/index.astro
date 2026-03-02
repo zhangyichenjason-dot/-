@@ -246,7 +246,7 @@ import { socialLinks } from "../data/socialLinks";
 				<div class="project-selector">
 					{
 						projects.map((project, index) => (
-							<button
+							<div
 								class:list={[
 									"cartridge",
 									{ active: index === 0 },
@@ -258,6 +258,8 @@ import { socialLinks } from "../data/socialLinks";
 								data-tags={JSON.stringify(project.tags)}
 								data-duration={project.duration}
 								aria-label={`查看 ${project.title}`}
+								role="button"
+								tabindex="0"
 							>
 								<div class="cartridge-top">
 									<div class="cartridge-grip-left" />
@@ -276,7 +278,7 @@ import { socialLinks } from "../data/socialLinks";
 								<div class="cartridge-bottom">
 									<div class="cartridge-pins" />
 								</div>
-							</button>
+							</div>
 						))
 					}
 				</div>
@@ -1329,8 +1331,8 @@ import { socialLinks } from "../data/socialLinks";
 	.cartridge-slot-window {
 		position: relative;
 		margin: 12px auto -20px;
-		width: 160px;
-		height: 120px;
+		width: 140px;
+		height: 110px;
 		border-radius: 6px 6px 0 0;
 		overflow: hidden;
 		background: linear-gradient(180deg, #2d1f15 0%, #3d2e1f 100%);
@@ -1367,14 +1369,14 @@ import { socialLinks } from "../data/socialLinks";
 	/* 克隆卡带在槽窗内的样式 */
 	.inserted-cartridge-holder .cartridge {
 		cursor: default;
-		transform: scale(1.17);
+		transform: scale(1);
 		pointer-events: none;
 		opacity: 0;
 		animation: slide-into-slot 0.4s ease-out forwards;
 		border-color: var(--color-primary);
 		box-shadow: 0 0 15px rgba(139, 27, 44, 0.4);
-		min-width: 140px;
-		width: auto;
+		flex: 0 0 140px;
+		width: 140px;
 	}
 
 	.inserted-cartridge-holder .cartridge-number {
@@ -1385,14 +1387,14 @@ import { socialLinks } from "../data/socialLinks";
 	@keyframes slide-into-slot {
 		0% {
 			opacity: 0;
-			transform: scale(1.17) translateY(40px);
+			transform: scale(1) translateY(40px);
 		}
 		60% {
 			opacity: 1;
 		}
 		100% {
 			opacity: 1;
-			transform: scale(1.17) translateY(0);
+			transform: scale(1) translateY(0);
 		}
 	}
 
@@ -1622,7 +1624,8 @@ import { socialLinks } from "../data/socialLinks";
 		padding: 0;
 		cursor: pointer;
 		transition: all 0.3s ease;
-		min-width: 140px;
+		flex: 0 0 140px;
+		width: 140px;
 		overflow: hidden;
 		box-shadow:
 			2px 2px 0 rgba(0, 0, 0, 0.1),
@@ -1944,14 +1947,17 @@ import { socialLinks } from "../data/socialLinks";
 		}
 
 		.project-selector {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			max-width: 360px;
+			max-width: 400px;
 		}
 
 		.cartridge {
-			width: 100%;
-			min-width: unset;
+			flex: 0 0 130px;
+			width: 130px;
+		}
+
+		.cartridge-slot-window {
+			width: 130px;
+			height: 100px;
 		}
 
 		.project-info {
@@ -1977,15 +1983,21 @@ import { socialLinks } from "../data/socialLinks";
 		}
 
 		.cartridge {
-			min-width: unset;
+			flex: 0 0 120px;
+			width: 120px;
 		}
 
 		.project-selector {
-			max-width: 300px;
+			max-width: 340px;
 		}
 
 		.cartridge-label {
-			height: 90px;
+			height: 75px;
+		}
+
+		.cartridge-slot-window {
+			width: 120px;
+			height: 95px;
 		}
 
 		.cartridge-number {
