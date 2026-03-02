@@ -28,6 +28,14 @@ const {
 			rel="stylesheet"
 		/>
 
+		<!-- 预加载首页 Hero 视频（最高优先级） -->
+		<link
+			rel="preload"
+			href="/video/超精简版合集.webm"
+			as="video"
+			type="video/webm"
+		/>
+
 		<title>{title}</title>
 	</head>
 	<body>
@@ -142,10 +150,16 @@ const {
 				// 收集需要预加载的资源
 				var loadItems = [];
 
-				// 收集所有 video 元素（直接监听其 canplaythrough 事件）
+				// ====== 首页 Hero 视频单独追踪（最高优先级）======
+				var heroVideo = mainContent.querySelector("video.bg-video");
+				var heroVideoReady = !heroVideo; // 没有 hero 视频时默认为 true
+
+				// 收集所有 video 元素（排除 hero 视频，hero 单独处理）
 				var videoEls = mainContent.querySelectorAll("video");
 				videoEls.forEach(function (video) {
-					loadItems.push({ type: "video", el: video });
+					if (video !== heroVideo) {
+						loadItems.push({ type: "video", el: video });
+					}
 				});
 
 				// 收集所有 img（排除加载页面自身的元素）
@@ -159,12 +173,26 @@ const {
 				var loadedCount = 0;
 				var currentPercent = 0;
 
+				// 计算当前应显示的进度百分比
+				// 其他资源占 0%~90%，Hero 视频占最后 10%
+				function getTargetPercent() {
+					var otherPercent =
+						totalResources > 0
+							? Math.round((loadedCount / totalResources) * 90)
+							: 90;
+					var heroPercent = heroVideoReady ? 10 : 0;
+					return Math.min(otherPercent + heroPercent, 100);
+				}
+
 				function updateProgress() {
 					loadedCount++;
-					var targetPercent = Math.round(
-						(loadedCount / Math.max(totalResources, 1)) * 100,
-					);
-					animatePercent(targetPercent);
+					animatePercent(getTargetPercent());
+				}
+
+				function onHeroVideoReady() {
+					if (heroVideoReady) return;
+					heroVideoReady = true;
+					animatePercent(getTargetPercent());
 				}
 
 				function animatePercent(target) {
@@ -203,17 +231,36 @@ const {
 					});
 				}
 
-				// 如果没有需要加载的资源，直接完成
+				// ====== Hero 视频优先加载 ======
+				if (heroVideo) {
+					heroVideo.preload = "auto";
+					if (heroVideo.readyState >= 4 && !heroVideo.paused) {
+						// 已经在播放中
+						heroVideoReady = true;
+					} else {
+						heroVideo.addEventListener(
+							"playing",
+							function () {
+								onHeroVideoReady();
+							},
+							{ once: true },
+						);
+						heroVideo.preload = "auto";
+						heroVideo.load();
+						heroVideo.play().catch(function () {});
+					}
+				}
+
+				// ====== 其他资源加载 ======
 				if (totalResources === 0) {
-					animatePercent(100);
+					// 没有其他资源，进度条先推到能达到的最大值
+					animatePercent(getTargetPercent());
 				} else {
 					loadItems.forEach(function (item) {
 						if (item.type === "video") {
 							var video = item.el;
-							// 确保视频开始加载
 							video.preload = "auto";
 							if (video.readyState >= 4 && !video.paused) {
-								// 已经在播放中
 								updateProgress();
 							} else {
 								video.addEventListener(
@@ -223,7 +270,6 @@ const {
 									},
 									{ once: true },
 								);
-								// 确保视频开始加载并播放
 								video.preload = "auto";
 								video.load();
 								video.play().catch(function () {});
@@ -237,12 +283,19 @@ const {
 					});
 				}
 
-				// 超时保底：15秒后强制完成
+				// 超时保底：15秒后其他资源视为完成（但仍等 Hero 视频）
+				setTimeout(function () {
+					loadedCount = totalResources;
+					animatePercent(getTargetPercent());
+				}, 15000);
+
+				// 绝对超时：30秒后无论如何都完成（防止 Hero 视频永远无法加载）
 				setTimeout(function () {
 					if (currentPercent < 100) {
+						heroVideoReady = true;
 						animatePercent(100);
 					}
-				}, 15000);
+				}, 30000);
 			})();
 		</script>
 
