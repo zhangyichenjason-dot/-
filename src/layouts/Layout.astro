@@ -31,48 +31,200 @@ const {
 		<title>{title}</title>
 	</head>
 	<body>
-		<!-- BGM 播放器 -->
-		<audio id="bgm" loop preload="auto">
-			<source src="/audio/bgm.opus" type="audio/opus" />
-			<source src="/audio/bgm.mp3" type="audio/mpeg" />
-		</audio>
-		<button id="bgm-toggle" class="bgm-toggle" aria-label="切换背景音乐">
-			<svg
-				class="icon-music-off"
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path d="M9 18V5l12-2v13"></path>
-				<circle cx="6" cy="18" r="3"></circle>
-				<circle cx="18" cy="16" r="3"></circle>
-				<line x1="1" y1="1" x2="23" y2="23"></line>
-			</svg>
-			<svg
-				class="icon-music-on"
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path d="M9 18V5l12-2v13"></path>
-				<circle cx="6" cy="18" r="3"></circle>
-				<circle cx="18" cy="16" r="3"></circle>
-			</svg>
-		</button>
+		<!-- ========== 加载页面 ========== -->
+		<div id="loading-screen" class="loading-screen">
+			<div class="loading-scanlines"></div>
+			<div class="loading-content">
+				<div class="loading-console">
+					<div class="loading-screen-bezel">
+						<div class="loading-screen-inner">
+							<div class="loading-title">&gt; WELCOME</div>
+							<p class="loading-message" id="loading-message"></p>
+							<div class="loading-bar-container">
+								<div class="loading-bar-label">
+									&gt; LOADING...
+								</div>
+								<div class="loading-bar-track">
+									<div
+										class="loading-bar-fill"
+										id="loading-bar-fill"
+									>
+									</div>
+								</div>
+								<div
+									class="loading-bar-percent"
+									id="loading-bar-percent"
+								>
+									0%
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-		<slot />
+		<!-- 主内容（加载完成前隐藏） -->
+		<div
+			id="main-content"
+			style="opacity: 0; transition: opacity 0.5s ease;"
+		>
+			<!-- BGM 播放器 -->
+			<audio id="bgm" loop preload="auto">
+				<source src="/audio/bgm.opus" type="audio/opus" />
+				<source src="/audio/bgm.mp3" type="audio/mpeg" />
+			</audio>
+			<button
+				id="bgm-toggle"
+				class="bgm-toggle"
+				aria-label="切换背景音乐"
+			>
+				<svg
+					class="icon-music-off"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M9 18V5l12-2v13"></path>
+					<circle cx="6" cy="18" r="3"></circle>
+					<circle cx="18" cy="16" r="3"></circle>
+					<line x1="1" y1="1" x2="23" y2="23"></line>
+				</svg>
+				<svg
+					class="icon-music-on"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M9 18V5l12-2v13"></path>
+					<circle cx="6" cy="18" r="3"></circle>
+					<circle cx="18" cy="16" r="3"></circle>
+				</svg>
+			</button>
+
+			<slot />
+		</div>
+
+		<!-- 加载页面脚本 -->
+		<script is:inline>
+			(function () {
+				var loadingScreen = document.getElementById("loading-screen");
+				var mainContent = document.getElementById("main-content");
+				var barFill = document.getElementById("loading-bar-fill");
+				var barPercent = document.getElementById("loading-bar-percent");
+				var messageEl = document.getElementById("loading-message");
+
+				// 打字机效果
+				var fullMessage =
+					"欢迎来到张奕晨的个人网站，为了保证最好的效果，请您稍等片刻，马上为您加载完毕";
+				var charIndex = 0;
+				var typeTimer = setInterval(function () {
+					if (charIndex < fullMessage.length) {
+						messageEl.textContent += fullMessage[charIndex];
+						charIndex++;
+					} else {
+						clearInterval(typeTimer);
+					}
+				}, 60);
+
+				// 收集需要预加载的资源
+				var resources = [];
+
+				// 收集所有 video source
+				var videos = document.querySelectorAll("video source");
+				videos.forEach(function (source) {
+					if (source.src)
+						resources.push({ type: "video", url: source.src });
+				});
+
+				// 收集所有 img（排除加载页面自身的元素）
+				var images = mainContent.querySelectorAll("img");
+				images.forEach(function (img) {
+					if (img.src)
+						resources.push({ type: "image", url: img.src });
+				});
+
+				var totalResources = resources.length;
+				var loadedCount = 0;
+				var currentPercent = 0;
+
+				function updateProgress() {
+					loadedCount++;
+					var targetPercent = Math.round(
+						(loadedCount / Math.max(totalResources, 1)) * 100,
+					);
+					animatePercent(targetPercent);
+				}
+
+				function animatePercent(target) {
+					if (target <= currentPercent) return;
+					var step = function () {
+						if (currentPercent < target) {
+							currentPercent++;
+							barFill.style.width = currentPercent + "%";
+							barPercent.textContent = currentPercent + "%";
+							if (currentPercent < target) {
+								requestAnimationFrame(step);
+							}
+							if (currentPercent >= 100) {
+								finishLoading();
+							}
+						}
+					};
+					requestAnimationFrame(step);
+				}
+
+				function finishLoading() {
+					setTimeout(function () {
+						loadingScreen.classList.add("fade-out");
+						mainContent.style.opacity = "1";
+						setTimeout(function () {
+							loadingScreen.style.display = "none";
+						}, 600);
+					}, 400);
+				}
+
+				// 如果没有需要加载的资源，直接完成
+				if (totalResources === 0) {
+					animatePercent(100);
+				} else {
+					resources.forEach(function (res) {
+						if (res.type === "video") {
+							var xhr = new XMLHttpRequest();
+							xhr.open("GET", res.url, true);
+							xhr.responseType = "blob";
+							xhr.onload = updateProgress;
+							xhr.onerror = updateProgress;
+							xhr.send();
+						} else {
+							var img = new Image();
+							img.onload = updateProgress;
+							img.onerror = updateProgress;
+							img.src = res.url;
+						}
+					});
+				}
+
+				// 超时保底：15秒后强制完成
+				setTimeout(function () {
+					if (currentPercent < 100) {
+						animatePercent(100);
+					}
+				}, 15000);
+			})();
+		</script>
 
 		<script is:inline>
 			document.addEventListener("DOMContentLoaded", function () {
@@ -97,4 +249,175 @@ const {
 
 <style is:global>
 	@import "../styles/global.css";
+
+	/* ========== 加载页面样式 ========== */
+	.loading-screen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #faf6f0;
+		z-index: 99999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 0.5s ease;
+	}
+
+	.loading-screen.fade-out {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	/* 扫描线 */
+	.loading-scanlines {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(196, 30, 58, 0.04) 2px,
+			rgba(196, 30, 58, 0.04) 4px
+		);
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.loading-content {
+		position: relative;
+		z-index: 2;
+		width: 90%;
+		max-width: 600px;
+	}
+
+	.loading-console {
+		border: 3px solid rgba(139, 27, 44, 0.4);
+		border-radius: 4px;
+		background: #f5efe5;
+		box-shadow:
+			0 0 20px rgba(139, 27, 44, 0.1),
+			0 0 40px rgba(139, 27, 44, 0.05);
+	}
+
+	.loading-screen-bezel {
+		border: 2px solid rgba(196, 30, 58, 0.2);
+		margin: 4px;
+		border-radius: 2px;
+	}
+
+	.loading-screen-inner {
+		padding: 2rem 2.5rem;
+		background: linear-gradient(180deg, #f5efe5 0%, #efe8dc 100%);
+	}
+
+	.loading-title {
+		font-family: "Press Start 2P", monospace;
+		font-size: clamp(1rem, 3vw, 1.6rem);
+		color: #8b1b2c;
+		margin-bottom: 1.2rem;
+		text-shadow: 0 0 20px rgba(139, 27, 44, 0.3);
+		animation: pulse-glow-loading 2s ease infinite;
+	}
+
+	.loading-message {
+		font-family: "Zpix", "VT323", monospace;
+		font-size: clamp(0.85rem, 2vw, 1.1rem);
+		color: #5a4632;
+		line-height: 1.8;
+		margin-bottom: 2rem;
+		min-height: 3.6em;
+		letter-spacing: 1px;
+	}
+
+	.loading-message::after {
+		content: "▌";
+		animation: blink 0.8s step-end infinite;
+		color: #8b1b2c;
+	}
+
+	.loading-bar-container {
+		margin-top: 0.5rem;
+	}
+
+	.loading-bar-label {
+		font-family: "VT323", monospace;
+		font-size: 1rem;
+		color: #8b7355;
+		margin-bottom: 0.5rem;
+		letter-spacing: 2px;
+	}
+
+	.loading-bar-track {
+		width: 100%;
+		height: 20px;
+		background: rgba(139, 27, 44, 0.08);
+		border: 2px solid rgba(139, 27, 44, 0.4);
+		position: relative;
+		overflow: hidden;
+		image-rendering: pixelated;
+	}
+
+	.loading-bar-fill {
+		height: 100%;
+		width: 0%;
+		background: linear-gradient(
+			90deg,
+			#8b1b2c 0%,
+			#af0f1f 40%,
+			#c41e3a 70%,
+			#e63946 100%
+		);
+		transition: width 0.05s linear;
+		position: relative;
+		box-shadow: 0 0 8px rgba(196, 30, 58, 0.4);
+	}
+
+	/* 像素风格的进度条块状效果 */
+	.loading-bar-fill::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: repeating-linear-gradient(
+			90deg,
+			transparent,
+			transparent 8px,
+			rgba(250, 246, 240, 0.25) 8px,
+			rgba(250, 246, 240, 0.25) 10px
+		);
+	}
+
+	.loading-bar-percent {
+		font-family: "Press Start 2P", monospace;
+		font-size: 0.75rem;
+		color: #8b1b2c;
+		text-align: right;
+		margin-top: 0.5rem;
+	}
+
+	@keyframes pulse-glow-loading {
+		0%,
+		100% {
+			text-shadow: 0 0 15px rgba(139, 27, 44, 0.3);
+		}
+		50% {
+			text-shadow:
+				0 0 20px rgba(139, 27, 44, 0.5),
+				0 0 40px rgba(139, 27, 44, 0.2);
+		}
+	}
+
+	/* 移动端适配 */
+	@media (max-width: 480px) {
+		.loading-screen-inner {
+			padding: 1.5rem 1.2rem;
+		}
+	}
 </style>
