@@ -1373,6 +1373,8 @@ import { socialLinks } from "../data/socialLinks";
 		animation: slide-into-slot 0.4s ease-out forwards;
 		border-color: var(--color-primary);
 		box-shadow: 0 0 15px rgba(139, 27, 44, 0.4);
+		min-width: 140px;
+		width: auto;
 	}
 
 	.inserted-cartridge-holder .cartridge-number {
@@ -1602,6 +1604,8 @@ import { socialLinks } from "../data/socialLinks";
 		justify-content: center;
 		gap: var(--spacing-lg);
 		flex-wrap: wrap;
+		max-width: 700px;
+		margin: 0 auto;
 	}
 
 	.cartridge {
@@ -1939,6 +1943,17 @@ import { socialLinks } from "../data/socialLinks";
 			grid-template-columns: 1fr;
 		}
 
+		.project-selector {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			max-width: 360px;
+		}
+
+		.cartridge {
+			width: 100%;
+			min-width: unset;
+		}
+
 		.project-info {
 			text-align: center;
 		}
@@ -1962,7 +1977,15 @@ import { socialLinks } from "../data/socialLinks";
 		}
 
 		.cartridge {
-			min-width: 110px;
+			min-width: unset;
+		}
+
+		.project-selector {
+			max-width: 300px;
+		}
+
+		.cartridge-label {
+			height: 90px;
 		}
 
 		.cartridge-number {
