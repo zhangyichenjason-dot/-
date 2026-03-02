@@ -212,19 +212,21 @@ const {
 							var video = item.el;
 							// 确保视频开始加载
 							video.preload = "auto";
-							if (video.readyState >= 4) {
-								// HAVE_ENOUGH_DATA - 已经可以播放
+							if (video.readyState >= 4 && !video.paused) {
+								// 已经在播放中
 								updateProgress();
 							} else {
 								video.addEventListener(
-									"canplaythrough",
+									"playing",
 									function () {
 										updateProgress();
 									},
 									{ once: true },
 								);
-								// 触发加载
+								// 确保视频开始加载并播放
+								video.preload = "auto";
 								video.load();
+								video.play().catch(function () {});
 							}
 						} else {
 							var img = new Image();
